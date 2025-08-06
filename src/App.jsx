@@ -72,6 +72,7 @@ function App() {
             {/* Fallback for unknown routes */}
             <Route path="*" element={<h1>404: Page Not Found</h1>} />
 
+          
 
         </Routes>
       </main>
