@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
+import { signup } from '../services/authService'; // Make sure this path is correct
 
-// --- Styled Components (can be shared with LoginPage) ---
+// --- Styled Components ---
 const PageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   background-color: #f8f9fa;
-  padding: 100px 1rem; /* Adjust for navbar and give some padding */
+  padding: 100px 1rem;
 `;
 
 const FormContainer = styled.div`
@@ -73,25 +74,25 @@ const SwitchViewLink = styled(Link)`
 `;
 
 const TermsLabel = styled.label`
-    display: flex;
-    align-items: center;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    color: #555;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  color: #555;
 `;
 
 // --- SignupPage Component ---
 const SignupPage = () => {
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
 
     if (password !== confirmPassword) {
-        alert("Passwords do not match!");
-        return;
+      alert("Passwords do not match!");
+      return;
     }
 
     const formData = {
@@ -100,31 +101,35 @@ const SignupPage = () => {
       email: e.target.email.value,
       password: password,
     };
-    console.log('Creating account with:', formData);
-    alert('Account created successfully! (Check console for data)');
-    navigate('/login'); // Redirect to login page after successful registration
+
+    try {
+      await signup(formData); // Call signup service
+      alert("Account created successfully!");
+      navigate("/login"); // Redirect on success
+    } catch (error) {
+      console.error("Signup failed:", error);
+      alert("Signup failed. Please try again.");
+    }
   };
 
   return (
     <PageContainer>
-        <FormContainer>
-            <Title>Create Account</Title>
-            <Form onSubmit={handleRegister}>
-              <Input type="text" name="name" placeholder="Full Name" required />
-              <Input type="tel" name="phone" placeholder="Phone Number" required />
-              <Input type="email" name="email" placeholder="Email" required />
-              <Input type="password" name="password" placeholder="Password" required />
-              <Input type="password" name="confirmPassword" placeholder="Confirm Password" required />
-              <TermsLabel>
-                <input type="checkbox" required style={{ marginRight: '8px' }} />
-                I agree to the terms and conditions.
-              </TermsLabel>
-              <Button type="submit">Create Account</Button>
-            </Form>
-            <SwitchViewLink to="/login">
-              Already have an account?
-            </SwitchViewLink>
-        </FormContainer>
+      <FormContainer>
+        <Title>Create Account</Title>
+        <Form onSubmit={handleRegister}>
+          <Input type="text" name="name" placeholder="Full Name" required />
+          <Input type="tel" name="phone" placeholder="Phone Number" required />
+          <Input type="email" name="email" placeholder="Email" required />
+          <Input type="password" name="password" placeholder="Password" required />
+          <Input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+          <TermsLabel>
+            <input type="checkbox" required style={{ marginRight: '8px' }} />
+            I agree to the terms and conditions.
+          </TermsLabel>
+          <Button type="submit">Create Account</Button>
+        </Form>
+        <SwitchViewLink to="/login">Already have an account?</SwitchViewLink>
+      </FormContainer>
     </PageContainer>
   );
 };

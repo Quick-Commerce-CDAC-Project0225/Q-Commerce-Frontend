@@ -90,7 +90,7 @@ const LoginPage = () => {
       localStorage.setItem('role', role);
 
       if (role === 'ROLE_CUSTOMER') {
-        navigate('/client/dashboard');
+        navigate('/products/all');
       } else if (role === 'ROLE_ADMIN') {
         navigate('/admin/dashboard');
       } else {

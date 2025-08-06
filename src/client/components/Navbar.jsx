@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
-// To make the cart count dynamic, you would import your state management hook
-// import { useCartStore } from '../../store/cartStore';
 import './Navbar.css'; // For any additional custom styling
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const { getItemCount } = useCart();
   const itemCount = getItemCount();
-
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
-  // CORRECTED: The href for 'All' now matches the routing pattern.
+  const { user, logout } = useAuth(); // ✅ Auth state & logout function
+
   const categories = [
     { name: 'All', icon: 'fas fa-store', href: '/products/all' },
     { name: 'Cafe', icon: 'fas fa-mug-hot', href: '/products/cafe' },
@@ -28,7 +28,6 @@ const Navbar = () => {
 
   return (
     <header className="fixed-top">
-      {/* Top Navbar */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-2">
         <div className="container-fluid">
           <Link className="navbar-brand fw-bold text-primary" to="/">
@@ -50,21 +49,30 @@ const Navbar = () => {
 
           <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarContent">
             <form className="d-flex flex-grow-1 mx-lg-3 my-2 my-lg-0">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder='Search for "chocolate box"'
-                aria-label="Search"
-              />
+              <input className="form-control me-2" type="search" placeholder='Search for "chocolate box"' aria-label="Search" />
               <button className="btn btn-outline-primary" type="submit">
                 <i className="fas fa-search"></i>
               </button>
             </form>
 
             <div className="navbar-nav ms-lg-auto d-flex flex-row align-items-center gap-3">
-              <Link to="/login" className="nav-link text-dark">
-                <i className="fas fa-user me-1"></i> Login
-              </Link>
+             {user ? (
+  <>
+    {user.role === 'ROLE_CUSTOMER' && (
+      <Link to="/history" className="nav-link text-dark">
+        <i className="fas fa-box me-1"></i> Orders
+      </Link>
+    )}
+    <button onClick={logout} className="btn btn-link nav-link text-dark">
+      <i className="fas fa-sign-out-alt me-1"></i> Logout
+    </button>
+  </>
+) : (
+  <Link to="/login" className="nav-link text-dark">
+    <i className="fas fa-user me-1"></i> Login
+  </Link>
+)}
+              
               <Link to="/cart" className="nav-link text-dark position-relative">
                 <i className="fas fa-shopping-cart"></i>
                 {itemCount > 0 && (
@@ -76,13 +84,12 @@ const Navbar = () => {
                 <span className="ms-1 d-lg-none">Cart</span>
               </Link>
             </div>
-            
-            {/* Categories for Mobile View */}
+
+            {/* Mobile Category List */}
             <ul className="navbar-nav d-lg-none mt-3 border-top pt-2">
               <li className="nav-item-text text-muted small">Categories</li>
               {categories.map((category) => (
                 <li className="nav-item" key={category.name}>
-                  {/* CORRECTED: Use NavLink instead of <a> */}
                   <NavLink className="nav-link" to={category.href} onClick={() => setIsNavCollapsed(true)}>
                     <i className={`${category.icon} me-2`}></i>{category.name}
                   </NavLink>
@@ -93,11 +100,10 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Bottom Category Menu (Desktop Only) */}
+      {/* Desktop Category Menu */}
       <div className="bg-white shadow-sm py-2 border-top d-none d-lg-flex">
         <div className="container-fluid d-flex flex-wrap gap-4 justify-content-center">
           {categories.map((category) => (
-            // CORRECTED: Use NavLink instead of <a>
             <NavLink 
               to={category.href} 
               key={category.name} 
