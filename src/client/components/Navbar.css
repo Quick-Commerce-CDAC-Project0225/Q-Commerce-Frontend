@@ -1,0 +1,27 @@
+.category-item {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.category-item:hover,
+.category-item.active {
+  color: #0d6efd;
+  border-bottom: 2px solid #0d6efd;
+}
+.super-saver {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+}
+
+.navbar.fixed-top {
+  z-index: 1030;
+}
+
+.sticky-category-menu {
+  position: sticky;
+  top: 56px; /* Height of navbar (adjust if different) */
+  z-index: 1029;
+  background-color: white;
+}
