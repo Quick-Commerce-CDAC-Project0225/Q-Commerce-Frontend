@@ -53,7 +53,7 @@ export default function AdminDashboard() {
 { title: 'Inventory',     count: counts.inventory,  to: '/admin/manage-inventory',  variant: 'primary',   border: 'border-primary' },
 { title: 'Delivery Areas', count: counts.areas,      to: '/admin/manage-area',       variant: 'secondary', border: 'border-secondary' },
 { title: 'Categories',     count: counts.categories, to: '/admin/manage-category',   variant: 'success',   border: 'border-success' },
-{ title: 'Products',       count: counts.products,   to: '/admin/manage-product',    variant: 'dark',      border: 'border-dark' },
+// { title: 'Products',       count: counts.products,   to: '/admin/manage-product',    variant: 'dark',      border: 'border-dark' },
 { title: 'Customers',      count: counts.customers,  to: '/admin/manage-customer',   variant: 'info',      border: 'border-info' },
 { title: 'Orders',         count: counts.orders,     to: '/admin/manage-order',      variant: 'warning',   border: 'border-warning' },
         ].map(({ title, count, to, variant, border }) => (
