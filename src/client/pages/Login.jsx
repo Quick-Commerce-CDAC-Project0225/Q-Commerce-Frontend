@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
+import { login } from "../services/authService";
 
 // --- Styled Components ---
 const PageContainer = styled.div`
@@ -9,7 +10,7 @@ const PageContainer = styled.div`
   justify-content: center;
   min-height: 100vh;
   background-color: #f8f9fa;
-  padding-top: 80px; /* Adjust for navbar height */
+  padding-top: 80px;
 `;
 
 const FormContainer = styled.div`
@@ -75,18 +76,29 @@ const SwitchViewLink = styled(Link)`
 // --- LoginPage Component ---
 const LoginPage = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    
-    // Temporary login logic without backend
-    if (email === 'j@test.com' && password === 'test') {
-      alert('Login Successful!');
-      navigate('/'); // Redirect to homepage on successful login
-    } else {
-      alert('Invalid credentials. Please try again.');
+
+    try {
+      const { role } = await login(email, password);
+
+      // Save role in localStorage (for navigation logic)
+      localStorage.setItem('role', role);
+
+      if (role === 'ROLE_CUSTOMER') {
+        navigate('/client/dashboard');
+      } else if (role === 'ROLE_ADMIN') {
+        navigate('/admin/dashboard');
+      } else {
+        setError('Unauthorized role');
+      }
+    } catch (err) {
+      setError('Invalid credentials. Please try again.');
+      console.error(err);
     }
   };
 
@@ -99,9 +111,8 @@ const LoginPage = () => {
           <Input type="password" name="password" placeholder="Password" required />
           <Button type="submit">Login</Button>
         </Form>
-        <SwitchViewLink to="/signup">
-          Create new account
-        </SwitchViewLink>
+        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+        <SwitchViewLink to="/signup">Create new account</SwitchViewLink>
       </FormContainer>
     </PageContainer>
   );
