@@ -11,6 +11,19 @@ import OrderHistoryPage from './client/pages/OrderHistory';
 import SelectLocationPage from './client/pages/SelectLocationPage';
 import DefineAreaPage from './client/pages/DefineAreaPage';
 
+import ManageProducts from './admin/pages/manageproducts';
+import ManageDarkStore from './admin/pages/managestore';
+import UpdateProductPage from './admin/pages/updateproduct';
+import AddStore from './admin/pages/addstore';
+import AddProducts from './admin/pages/addproducts';
+
+import AddNewAddress from './client/pages/addnewaddress';
+import ManageAddress from './client/pages/ManageAddress';
+import PaymentPage from './client/pages/PaymentPage';
+import PlaceOrder from './client/pages/placeorder';
+
+
+
 const HomePage = () => <ProductListPage />;
 
 function App() {
@@ -28,6 +41,17 @@ function App() {
           <Route path="/history" element={<OrderHistoryPage />} />
            <Route path="/location" element={<SelectLocationPage />} />
            <Route path="/location-map" element={<DefineAreaPage />} />
+           
+        <Route path='/addproducts' element={<AddProducts/>}/>
+        <Route path='/manageproducts' element={<ManageProducts/>}/>
+         <Route path='/updateproduct' element={<UpdateProductPage/>}/>
+        <Route path='/managestore' element={<ManageDarkStore/>}/>
+        <Route path='/addstore' element={<AddStore/>}/>
+        <Route path='/placeorder' element={<PlaceOrder/>}/>
+          <Route path='/addnewaddress' element={<AddNewAddress/>}/>
+           <Route path='/manageaddress' element={<ManageAddress/>}/>
+            <Route path='/paymentpage' element={<PaymentPage/>}/>
+           
         </Routes>
       </main>
     </CartProvider>
