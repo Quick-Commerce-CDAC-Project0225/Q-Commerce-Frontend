@@ -67,7 +67,7 @@ export default function Home() {
             <Card.Body className="d-flex flex-column">
               <Card.Title>Products</Card.Title>
               <Card.Text className="flex-grow-1">
-                Add new products, update details, and keep your catalog fresh.
+                Add new products, update details, and keep your catalog updated and revelant.
               </Card.Text>
               <Button as={Link} to="/manage-product" variant="dark">
                 Go to Products
@@ -82,7 +82,7 @@ export default function Home() {
             <Card.Body className="d-flex flex-column">
               <Card.Title>Customers</Card.Title>
               <Card.Text className="flex-grow-1">
-                View and manage your customer database and contact info.
+                View and manage your customer database and contact information.
               </Card.Text>
               <Button as={Link} to="/manage-customer" variant="info">
                 Go to Customers
@@ -97,7 +97,7 @@ export default function Home() {
             <Card.Body className="d-flex flex-column">
               <Card.Title>Orders</Card.Title>
               <Card.Text className="flex-grow-1">
-                Track and process customer orders and their statuses.
+                Track and process customer orders and their status.
               </Card.Text>
               <Button as={Link} to="/manage-order" variant="warning">
                 Go to Orders
