@@ -17,12 +17,43 @@ const getInitialCart = () => {
 
 // 2. Create the Provider component
 export const CartProvider = ({ children }) => {
-    const [items, setItems] = useState(getInitialCart);
+    // const [items, setItems] = useState(getInitialCart);
 
-    // Persist cart to localStorage whenever items change
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(items));
-    }, [items]);
+    // // Persist cart to localStorage whenever items change
+    // useEffect(() => {
+    //     localStorage.setItem('cart', JSON.stringify(items));
+    // }, [items]);
+
+    const [items, setItems] = useState([]);
+
+// Sync from localStorage on mount
+useEffect(() => {
+  const syncCartFromLocalStorage = () => {
+    const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setItems(currentCart);
+  };
+
+  syncCartFromLocalStorage();
+}, []);
+
+// Persist to localStorage on items change
+useEffect(() => {
+  localStorage.setItem('cart', JSON.stringify(items));
+}, [items]);
+
+// Sync if localStorage changes (e.g., in another tab or manual clear)
+useEffect(() => {
+  const handleStorageChange = (event) => {
+    if (event.key === 'cart') {
+      const newCart = event.newValue ? JSON.parse(event.newValue) : [];
+      setItems(newCart);
+    }
+  };
+
+  window.addEventListener('storage', handleStorageChange);
+  return () => window.removeEventListener('storage', handleStorageChange);
+}, []);
+
 
     const addItem = (product) => {
         setItems(prevItems => {

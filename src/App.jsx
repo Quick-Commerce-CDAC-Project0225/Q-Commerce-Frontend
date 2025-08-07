@@ -26,6 +26,7 @@ import ManageCategory   from './admin/pages/ManageCategory'
 import ManageCustomer   from './admin/pages/ManageCustomer'
 import ManageOrder      from './admin/pages/ManageOrder'
 import ManageDarkStore from './admin/pages/managestore';
+import PlaceOrder from './client/pages/PlaceOrders';
 
 
 // Layout that wraps all Admin routes
@@ -56,6 +57,7 @@ function App() {
           <Route path="/history" element={<OrderHistoryPage />} />
            <Route path="/location" element={<SelectLocationPage />} />
            <Route path="/location-map" element={<DefineAreaPage />} />
+           <Route path="place-order" element={<PlaceOrder />} />
 
  {/* Admin routes */}
             <Route path="/admin/*" element={<AdminLayout />}>
@@ -69,6 +71,7 @@ function App() {
               <Route path="manage-customer"  element={<ManageCustomer />} />
               <Route path="manage-order"     element={<ManageOrder />} />
               <Route path="manage-store"     element={<ManageDarkStore />} />
+              
             </Route>
 
             {/* Fallback for unknown routes */}
