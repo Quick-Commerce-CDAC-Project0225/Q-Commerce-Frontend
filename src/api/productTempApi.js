@@ -1,7 +1,7 @@
 // src/api/productApi.js
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8082/api/v1/products"; // Change port if different
+const BASE_URL = "http://localhost:8080/api/v1/products"; // Change port if different
 
 export const getAllProducts = (page = 1, size = 100) =>
   axios.get(`${BASE_URL}?page=${page}&size=${size}&orderBy=updatedAt-desc`);

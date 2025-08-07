@@ -89,6 +89,15 @@ useEffect(() => {
         setItems([]);
     };
 
+    useEffect(() => {
+  const handleCartClear = () => {
+    setItems([]); // ✅ clear state
+    };
+
+  window.addEventListener('cart:clear', handleCartClear);
+  return () => window.removeEventListener('cart:clear', handleCartClear);
+}, []);
+
     const getCartTotal = () => {
         return items.reduce((total, item) => total + item.product.price * item.quantity, 0);
     };
