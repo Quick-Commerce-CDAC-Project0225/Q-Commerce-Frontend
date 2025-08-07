@@ -4,6 +4,7 @@ import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export default function AdminDashboard() {
+   // Loading state to handle spinner display before data loads
   const [counts, setCounts] = useState({
     inventory: 0,
     areas: 0,
@@ -12,9 +13,12 @@ export default function AdminDashboard() {
     customers: 0,
     orders: 0,
   });
+
+  // useEffect runs once after the component mounts
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+     // Helper function to get and parse data from localStorage safely
     const loadCount = (key) => {
       try {
         const data = JSON.parse(localStorage.getItem(key));
@@ -24,6 +28,7 @@ export default function AdminDashboard() {
       }
     };
 
+    // Set all entity counts from localStorage
     setCounts({
       inventory: loadCount('inventoryData'),
       areas: loadCount('areaData'),
@@ -38,16 +43,17 @@ export default function AdminDashboard() {
   if (loading) {
     return (
       <Container className="text-center my-5">
-        <Spinner animation="border" role="status" />
+        <Spinner animation="border" role ="status" />
       </Container>
     );
   }
-
+// Main dashboard UI layout
   return (
     <Container className="my-5">
       <h1 className="text-center mb-4">Admin Dashboard</h1>
       <Row className="gy-4">
         {[
+          
           // src/pages/AdminDashboard.jsx
 // src/pages/AdminDashboard.jsx
 { title: 'Inventory',     count: counts.inventory,  to: '/admin/manage-inventory',  variant: 'primary',   border: 'border-primary' },

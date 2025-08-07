@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 function AddProducts() {
   return (
     <motion.div
+    //  vertical height and padding
       className="min-vh-100 py-5 px-3"
       style={{
         background: 'linear-gradient(to right, #e3f2fd, #ede7f6)',
+        
       }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -29,7 +31,7 @@ function AddProducts() {
           </h1>
 
           <form className="row g-4">
-            {/* Product Name */}
+            {/*Product Name*/}
             <div className="col-md-6">
               <label className="form-label fw-semibold text-dark">Product Name</label>
               <input
@@ -39,7 +41,7 @@ function AddProducts() {
               />
             </div>
 
-            {/* Description */}
+            {/*Description*/}
             <div className="col-md-6">
               <label className="form-label fw-semibold text-dark">Description</label>
               <input
@@ -49,7 +51,7 @@ function AddProducts() {
               />
             </div>
 
-            {/* Price */}
+            {/*Price*/}
             <div className="col-md-6">
               <label className="form-label fw-semibold text-dark">Price</label>
               <input
@@ -57,9 +59,10 @@ function AddProducts() {
                 className="form-control"
                 placeholder="Enter price"
               />
+              
             </div>
 
-            {/* Category */}
+            {/*Category*/}
             <div className="col-md-6">
               <label className="form-label fw-semibold text-dark">Category</label>
               <select className="form-select">
@@ -71,7 +74,7 @@ function AddProducts() {
               </select>
             </div>
 
-            {/* Image Upload */}
+            {/*Image Upload*/}
             <div className="col-md-12">
               <label className="form-label fw-semibold text-dark">Product Image</label>
               <input
@@ -81,7 +84,7 @@ function AddProducts() {
               />
             </div>
 
-            {/* Submit Button */}
+            {/*Submit Button*/}
             <div className="col-12 text-end">
               <motion.button
                 type="submit"
@@ -89,7 +92,7 @@ function AddProducts() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                ✅ Save Product
+                 Save Product
               </motion.button>
             </div>
           </form>

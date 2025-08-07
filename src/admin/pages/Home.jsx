@@ -1,12 +1,17 @@
 // src/pages/Home.jsx
 import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';// For internal navigation without page reloads
 
+// Home component for the admin interface
 export default function Home() {
   return (
+
     <Container className="my-5">
+      {/* Subtext description */}
       <h1 className="text-center mb-4">Welcome to QuickCommerce Admin</h1>
+
+      {/* Subtext description */}
       <p className="lead text-center mb-5">
         Manage everything—inventory, areas, categories, products, customers, and orders.
       </p>
@@ -26,7 +31,7 @@ export default function Home() {
           </Card>
         </Col>
 
-        {/* Areas */}
+        {/* delivery Areas */}
         <Col md={6} lg={3}>
           <Card className="h-100 shadow-sm">
             <Card.Body className="d-flex flex-column">
@@ -56,13 +61,13 @@ export default function Home() {
           </Card>
         </Col>
 
-        {/* Products */}
+        {/*Products*/}
         <Col md={6} lg={3}>
           <Card className="h-100 shadow-sm">
             <Card.Body className="d-flex flex-column">
               <Card.Title>Products</Card.Title>
               <Card.Text className="flex-grow-1">
-                Add new products, update details, and keep your catalog fresh.
+                Add new products, update details, and keep your catalog updated and revelant.
               </Card.Text>
               <Button as={Link} to="/manage-product" variant="dark">
                 Go to Products
@@ -71,13 +76,13 @@ export default function Home() {
           </Card>
         </Col>
 
-        {/* Customers */}
+        {/*Customers*/}
         <Col md={6} lg={3}>
           <Card className="h-100 shadow-sm">
             <Card.Body className="d-flex flex-column">
               <Card.Title>Customers</Card.Title>
               <Card.Text className="flex-grow-1">
-                View and manage your customer database and contact info.
+                View and manage your customer database and contact information.
               </Card.Text>
               <Button as={Link} to="/manage-customer" variant="info">
                 Go to Customers
@@ -86,13 +91,13 @@ export default function Home() {
           </Card>
         </Col>
 
-        {/* Orders */}
+        {/*Orders*/}
         <Col md={6} lg={3}>
           <Card className="h-100 shadow-sm">
             <Card.Body className="d-flex flex-column">
               <Card.Title>Orders</Card.Title>
               <Card.Text className="flex-grow-1">
-                Track and process customer orders and their statuses.
+                Track and process customer orders and their status.
               </Card.Text>
               <Button as={Link} to="/manage-order" variant="warning">
                 Go to Orders
