@@ -1,10 +1,12 @@
+// src/services/orderService.js
 import axios from 'axios';
 import { API_ENDPOINTS } from '../../config';
+
 
 export const getMyOrders = async () => {
   try {
     const response = await axios.get(API_ENDPOINTS.ORDER_HISTORY, {
-      withCredentials: true // if using HTTP-only cookies for auth
+      withCredentials: true
     });
     return response.data;
   } catch (error) {

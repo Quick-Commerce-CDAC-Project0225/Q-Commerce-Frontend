@@ -22,9 +22,10 @@ import AdminDashboard   from './admin/pages/AdminDashboard'
 import ManageInventory  from './admin/pages/ManageInventory'
 import ManageArea       from './admin/pages/ManageArea'
 import ManageCategory   from './admin/pages/ManageCategory'
-import ManageProduct    from './admin/pages/ManageProduct'
+// import ManageProduct    from './admin/pages/ManageProduct'
 import ManageCustomer   from './admin/pages/ManageCustomer'
 import ManageOrder      from './admin/pages/ManageOrder'
+import ManageDarkStore from './admin/pages/managestore';
 
 
 // Layout that wraps all Admin routes
@@ -64,9 +65,10 @@ function App() {
               <Route path="manage-inventory" element={<ManageInventory />} />
               <Route path="manage-area"      element={<ManageArea />} />
               <Route path="manage-category"  element={<ManageCategory />} />
-              <Route path="manage-product"   element={<ManageProduct />} />
+              {/* <Route path="manage-product"   element={<ManageProduct />} /> */}
               <Route path="manage-customer"  element={<ManageCustomer />} />
               <Route path="manage-order"     element={<ManageOrder />} />
+              <Route path="manage-store"     element={<ManageDarkStore />} />
             </Route>
 
             {/* Fallback for unknown routes */}
