@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useCart } from '../context/CartContext'; // CORRECTED: Import the context hook
+import { useCart } from '../context/CartContext';  // Assuming you have a CartContext
 import { Link } from 'react-router-dom';
 
 const CardContainer = styled.div`
@@ -63,7 +63,6 @@ const AddToCartButton = styled.button`
   }
 `;
 
-// New styled component for the "Go to Cart" button
 const GoToCartButton = styled(AddToCartButton)`
   background-color: #ffc107; /* Yellow */
   color: #212529; /* Dark text for better contrast */
@@ -76,9 +75,7 @@ const GoToCartButton = styled(AddToCartButton)`
   }
 `;
 
-
 const ProductCard = ({ product }) => {
-  // Get both addItem and the items array from the context
   const { addItem, items } = useCart();
 
   const handleAddToCart = () => {
@@ -86,7 +83,6 @@ const ProductCard = ({ product }) => {
     console.log(`${product.name} added to cart!`);
   };
 
-  // Check if the current product is already in the cart
   const isInCart = items.some(item => item.product.id === product.id);
 
   return (
@@ -97,8 +93,6 @@ const ProductCard = ({ product }) => {
       <ProductInfo>
         <ProductName>{product.name}</ProductName>
         <ProductPrice>{"\u20B9"}{product.price.toFixed(2)}</ProductPrice>
-        
-        {/* Conditionally render the button based on whether the item is in the cart */}
         {isInCart ? (
           <GoToCartButton as={Link} to="/cart">
             Go to Cart

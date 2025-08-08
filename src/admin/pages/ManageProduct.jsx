@@ -160,7 +160,7 @@ export default function ManageProduct() {
                 <td>
                   {p.images && p.images.length > 0 ? (
                     <Image
-                      src={`http://localhost:8082${p.images[0]}`}
+                      src={`http://localhost:8080${p.images[0]}`}
                       width={50}
                       height={50}
                       rounded
