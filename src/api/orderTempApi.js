@@ -18,7 +18,7 @@
 import axios from "axios";
 
 // Replace with your backend base URL
-const BASE_API = "http://localhost:8080/api/v1";
+const BASE_API = "http://localhost:8082/api/v1";
 
 // ✅ Get all orders (Admin only)
 export async function fetchAllOrders() {
