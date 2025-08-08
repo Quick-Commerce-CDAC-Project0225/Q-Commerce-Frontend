@@ -1,13 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 function AddStore() {
+  const [storeName, setStoreName] = useState('');
+  const [area, setArea] = useState('');
+  const [status, setStatus] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!storeName || !area || status === '') {
+      alert('Please fill all fields');
+      return;
+    }
+
+    const payload = {
+      name: storeName,
+      area,
+      status: parseInt(status)
+    };
+
+    try {
+      const response = await axios.post('http://localhost:8080/api/stores', payload); // Replace with your actual endpoint
+      console.log('Store added:', response.data);
+      alert('Store added successfully!');
+      setStoreName('');
+      setArea('');
+      setStatus('');
+    } catch (error) {
+      console.error('Error adding store:', error);
+      alert('Failed to add store');
+    }
+  };
+
   return (
     <motion.div
       className="min-vh-100 py-5 px-4"
-      style={{
-        background: 'linear-gradient(to right, #f5f5fa, #e3f2fd)'
-      }}
+      style={{ background: 'linear-gradient(to right, #f5f5fa, #e3f2fd)' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -28,17 +58,7 @@ function AddStore() {
             🏬 Add New Store
           </h2>
 
-          <form className="row g-4">
-            {/* Store ID */}
-            <div className="col-md-6">
-              <label className="form-label fw-semibold text-secondary">Store ID</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter store ID"
-              />
-            </div>
-
+          <form className="row g-4" onSubmit={handleSubmit}>
             {/* Store Name */}
             <div className="col-md-6">
               <label className="form-label fw-semibold text-secondary">Store Name</label>
@@ -46,6 +66,8 @@ function AddStore() {
                 type="text"
                 className="form-control"
                 placeholder="Enter store name"
+                value={storeName}
+                onChange={(e) => setStoreName(e.target.value)}
               />
             </div>
 
@@ -56,13 +78,19 @@ function AddStore() {
                 type="text"
                 className="form-control"
                 placeholder="Enter area (e.g., Phase 1)"
+                value={area}
+                onChange={(e) => setArea(e.target.value)}
               />
             </div>
 
             {/* Active Status */}
             <div className="col-md-6">
               <label className="form-label fw-semibold text-secondary">Active Status</label>
-              <select className="form-select">
+              <select
+                className="form-select"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
                 <option value="">Select status</option>
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 // Reusable StoreRow component with toggle
 function StoreRow({ id, name, area, initialStatus }) {
@@ -12,7 +13,7 @@ function StoreRow({ id, name, area, initialStatus }) {
   };
 
   return (
-    <tr className="table-row">
+    <tr>
       <td>{id}</td>
       <td>{name}</td>
       <td>{area}</td>
@@ -38,18 +39,31 @@ function StoreRow({ id, name, area, initialStatus }) {
 
 function ManageDarkStore() {
   const navigate = useNavigate();
+  const [storeList, setStoreList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const storeList = [
-    { id: 1, name: 'ABC', area: 'Phase 1', status: 1 },
-    { id: 2, name: 'XYZ', area: 'Phase 2', status: 0 }
-  ];
+useEffect(() => {
+  axios
+    .get('http://localhost:8080/api/stores') // Replace with your actual endpoint
+    .then(response => {
+      // Check if response.data is an array
+      const data = Array.isArray(response.data) ? response.data : response.data.stores;
+      setStoreList(data || []);
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error('Error fetching stores:', err);
+      setError('Failed to load store data.');
+      setLoading(false);
+    });
+}, []);
+
 
   return (
     <motion.div
       className="min-vh-100 py-5 px-4"
-      style={{
-        background: 'linear-gradient(to right, #f5f5fa, #e3f2fd)'
-      }}
+      style={{ background: 'linear-gradient(to right, #f5f5fa, #e3f2fd)' }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -68,15 +82,13 @@ function ManageDarkStore() {
         >
           {/* Header */}
           <div className="d-flex justify-content-between align-items-center mb-4">
-            <button className="btn btn-outline-secondary">
-              ← Back
-            </button>
+            <button className="btn btn-outline-secondary">← Back</button>
             <h1 className="fw-bold text-primary display-6 m-0">
               🏬 Manage Dark Stores
             </h1>
             <button
               className="btn btn-success px-4 py-2 shadow-sm"
-              onClick={() => navigate('/addstore')}
+              onClick={() => navigate('/admin/add-store')}
             >
               ＋ Add Store
             </button>
@@ -84,27 +96,33 @@ function ManageDarkStore() {
 
           {/* Table */}
           <div className="table-responsive rounded">
-            <table className="table table-bordered table-hover align-middle text-center">
-              <thead className="table-primary">
-                <tr>
-                  <th>ID</th>
-                  <th>Store Name</th>
-                  <th>Area</th>
-                  <th>Active Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {storeList.map(store => (
-                  <StoreRow
-                    key={store.id}
-                    id={store.id}
-                    name={store.name}
-                    area={store.area}
-                    initialStatus={store.status}
-                  />
-                ))}
-              </tbody>
-            </table>
+            {loading ? (
+              <div className="text-center py-5 text-muted">Loading stores...</div>
+            ) : error ? (
+              <div className="text-center py-5 text-danger">{error}</div>
+            ) : (
+              <table className="table table-bordered table-hover align-middle text-center">
+                <thead className="table-primary">
+                  <tr>
+                    <th>ID</th>
+                    <th>Store Name</th>
+                    <th>Area</th>
+                    <th>Active Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {storeList.map(store => (
+                    <StoreRow
+                      key={store.id}
+                      id={store.id}
+                      name={store.name}
+                      area={store.area}
+                      initialStatus={store.status}
+                    />
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </motion.div>
       </div>

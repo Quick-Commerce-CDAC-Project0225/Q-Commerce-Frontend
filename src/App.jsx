@@ -118,7 +118,7 @@ import ManageCustomer from './admin/pages/ManageCustomer';
 import ManageOrder from './admin/pages/ManageOrder';
 import ManageDarkStore from './admin/pages/managestore';
 import ManageProduct from './admin/pages/ManageProduct';
-
+import AddStore from './admin/pages/addstore'; 
 
 // ✅ Layout for client routes
 const ClientLayout = () => (
@@ -170,6 +170,7 @@ function App() {
           <Route path="manage-customer" element={<ManageCustomer />} />
           <Route path="manage-order" element={<ManageOrder />} />
           <Route path="manage-store" element={<ManageDarkStore />} />
+          <Route path="add-store" element={<AddStore />} />
           <Route path="manage-product" element={<ManageProduct />} />
         </Route>
 
