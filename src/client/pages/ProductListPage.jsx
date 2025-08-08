@@ -41,7 +41,7 @@ const ProductListPage = () => {
           id: p.productId,
           name: p.name,
           price: p.price,
-          imageUrl: p.images?.[0] || 'https://placehold.co/600x400?text=No+Image',
+          imageUrl: p.images?.[0] ? `http://localhost:8080${p.images[0]}` : 'https://placehold.co/600x400?text=No+Image',
         }));
         setProducts(mapped);
       } catch (err) {
