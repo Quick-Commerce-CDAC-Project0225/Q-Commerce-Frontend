@@ -37,11 +37,13 @@ const ProductListPage = () => {
     const fetchProducts = async () => {
       try {
         const data = await getAllProducts();
+        console.log(data);
         const mapped = data.map((p) => ({
           id: p.productId,
           name: p.name,
           price: p.price,
-          imageUrl: p.images?.[0] ? `http://localhost:8080${p.images[0]}` : 'https://placehold.co/600x400?text=No+Image',
+          description: p.description,
+          imageUrl: p.images?.[0] ? `http://52.66.243.195:8080${p.images[0]}` : 'https://placehold.co/600x400?text=No+Image',
         }));
         setProducts(mapped);
       } catch (err) {
@@ -52,7 +54,7 @@ const ProductListPage = () => {
     fetchProducts();
   }, []);
 
-  const categoryName = location.pathname.split('/')[2] || 'All Products';
+  const categoryName = " ";
 
   return (
     <PageWrapper>

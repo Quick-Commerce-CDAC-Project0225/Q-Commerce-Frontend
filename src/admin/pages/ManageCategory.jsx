@@ -1,17 +1,16 @@
-// src/pages/ManageCategory.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Table, Button, Form, Modal } from "react-bootstrap";
 
 const DEFAULT_CATEGORIES = [
-  { id: 1,  categoryName: "Groceries" },
-  { id: 2,  categoryName: "Beverages" },
-  { id: 3,  categoryName: "Snacks" },
-  { id: 4,  categoryName: "Dairy" },
-  { id: 5,  categoryName: "Bakery" },
-  { id: 6,  categoryName: "Household Supplies" },
-  { id: 7,  categoryName: "Personal Care" },
-  { id: 8,  categoryName: "Electronics" },
-  { id: 9,  categoryName: "Clothing" },
+  { id: 1, categoryName: "Groceries" },
+  { id: 2, categoryName: "Beverages" },
+  { id: 3, categoryName: "Snacks" },
+  { id: 4, categoryName: "Dairy" },
+  { id: 5, categoryName: "Bakery" },
+  { id: 6, categoryName: "Household Supplies" },
+  { id: 7, categoryName: "Personal Care" },
+  { id: 8, categoryName: "Electronics" },
+  { id: 9, categoryName: "Clothing" },
   { id: 10, categoryName: "Health & Wellness" },
   { id: 11, categoryName: "Stationery" },
   { id: 12, categoryName: "Toys & Games" },
@@ -21,26 +20,10 @@ const DEFAULT_CATEGORIES = [
 ];
 
 export default function ManageCategory() {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
   const [newName, setNewName] = useState("");
   const [editCat, setEditCat] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-  // Load from localStorage or defaults
-  useEffect(() => {
-    const stored = localStorage.getItem("categoryData");
-    if (stored) {
-      setCategories(JSON.parse(stored));
-    } else {
-      setCategories(DEFAULT_CATEGORIES);
-      localStorage.setItem("categoryData", JSON.stringify(DEFAULT_CATEGORIES));
-    }
-  }, []);
-
-  // Persist on change
-  useEffect(() => {
-    localStorage.setItem("categoryData", JSON.stringify(categories));
-  }, [categories]);
 
   const handleAdd = () => {
     const name = newName.trim();
@@ -86,7 +69,6 @@ export default function ManageCategory() {
 
   const resetToDefault = () => {
     setCategories(DEFAULT_CATEGORIES);
-    localStorage.setItem("categoryData", JSON.stringify(DEFAULT_CATEGORIES));
   };
 
   return (

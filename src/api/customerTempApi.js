@@ -1,7 +1,7 @@
 // import axios from 'axios';
 
 // const client = axios.create({
-//   baseURL: 'http://localhost:8082',
+//   baseURL: 'http://52.66.243.195:8080',
 // });
 
 // client.interceptors.request.use((config) => {
@@ -15,7 +15,7 @@
 // src/api/customerApi.js
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8082/api/v1/users/customers";
+const BASE_URL = "http://52.66.243.195:8080/api/v1/users/customers";
 
 export const getAllCustomers = () => axios.get(BASE_URL);
 
@@ -25,6 +25,6 @@ export const updateCustomer = (id, customer) =>
 export const deleteCustomer = (id) => axios.delete(`${BASE_URL}/${id}`);
 
 export const getUserById = (id) =>
-  axios.get(`http://localhost:8082/api/v1/users/${id}`);
+  axios.get(`http://52.66.243.195:8080/api/v1/users/${id}`);
 
 

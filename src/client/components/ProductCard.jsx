@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useCart } from '../context/CartContext';  // Assuming you have a CartContext
 import { Link } from 'react-router-dom';
@@ -7,15 +7,16 @@ const CardContainer = styled.div`
   border: 1px solid #eee;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s, box-shadow 0.2s;
   background: white;
   display: flex;
   flex-direction: column;
+  cursor: pointer; /* Make entire card clickable */
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -29,7 +30,7 @@ const ProductInfo = styled.div`
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Makes this div take up remaining space */
+  flex-grow: 1;
 `;
 
 const ProductName = styled.h3`
@@ -56,7 +57,7 @@ const AddToCartButton = styled.button`
   background-color: #28a745; /* Green */
   color: white;
   transition: background-color 0.2s;
-  margin-top: auto; /* Pushes the button to the bottom */
+  margin-top: auto;
 
   &:hover {
     background-color: #218838;
@@ -66,9 +67,6 @@ const AddToCartButton = styled.button`
 const GoToCartButton = styled(AddToCartButton)`
   background-color: #ffc107; /* Yellow */
   color: #212529; /* Dark text for better contrast */
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
 
   &:hover {
     background-color: #e0a800;
@@ -77,6 +75,7 @@ const GoToCartButton = styled(AddToCartButton)`
 
 const ProductCard = ({ product }) => {
   const { addItem, items } = useCart();
+  const [showDescription, setShowDescription] = useState(false);  // State to toggle between image and description
 
   const handleAddToCart = () => {
     addItem(product);
@@ -85,22 +84,39 @@ const ProductCard = ({ product }) => {
 
   const isInCart = items.some(item => item.product.id === product.id);
 
+  // Toggle between image and description
+  const handleToggleContent = () => {
+    setShowDescription(prev => !prev);
+  };
+
   return (
     <CardContainer>
-      <Link to={`/products/${product.id}`}>
-        <ProductImage src={product.imageUrl} alt={product.name} />
-      </Link>
+      {/* The image is clickable and toggles between image and description */}
+      <ProductImage
+        src={product.imageUrl}
+        alt={product.name}
+        onClick={handleToggleContent} // Toggle on image click
+      />
+
       <ProductInfo>
-        <ProductName>{product.name}</ProductName>
-        <ProductPrice>{"\u20B9"}{product.price.toFixed(2)}</ProductPrice>
-        {isInCart ? (
-          <GoToCartButton as={Link} to="/cart">
-            Go to Cart
-          </GoToCartButton>
+        {/* If showDescription is true, show description, otherwise show image, name, price */}
+        {!showDescription ? (
+          <>
+            <ProductName>{product.name}</ProductName>
+            <ProductPrice>{"\u20B9"}{product.price.toFixed(2)}</ProductPrice>
+            {isInCart ? (
+              <GoToCartButton as={Link} to="/cart">
+                Go to Cart
+              </GoToCartButton>
+            ) : (
+              <AddToCartButton onClick={handleAddToCart}>
+                Add to Cart
+              </AddToCartButton>
+            )}
+          </>
         ) : (
-          <AddToCartButton onClick={handleAddToCart}>
-            Add to Cart
-          </AddToCartButton>
+          // If description is toggled, show description
+          <p>{product.description}</p>
         )}
       </ProductInfo>
     </CardContainer>

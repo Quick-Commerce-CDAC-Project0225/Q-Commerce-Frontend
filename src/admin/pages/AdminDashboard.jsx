@@ -56,12 +56,12 @@ export default function AdminDashboard() {
           
           // src/pages/AdminDashboard.jsx
 // src/pages/AdminDashboard.jsx
-{ title: 'Inventory',     count: counts.inventory,  to: '/admin/manage-inventory',  variant: 'primary',   border: 'border-primary' },
-{ title: 'Delivery Areas', count: counts.areas,      to: '/admin/manage-area',       variant: 'secondary', border: 'border-secondary' },
-{ title: 'Categories',     count: counts.categories, to: '/admin/manage-category',   variant: 'success',   border: 'border-success' },
+{ title: 'Inventory',     count: 35,  to: '/admin/manage-inventory',  variant: 'primary',   border: 'border-primary' },
+{ title: 'Delivery Areas', count: 15,      to: '/admin/manage-area',       variant: 'secondary', border: 'border-secondary' },
+{ title: 'Categories',     count: 13, to: '/admin/manage-category',   variant: 'success',   border: 'border-success' },
 // { title: 'Products',       count: counts.products,   to: '/admin/manage-product',    variant: 'dark',      border: 'border-dark' },
-{ title: 'Customers',      count: counts.customers,  to: '/admin/manage-customer',   variant: 'info',      border: 'border-info' },
-{ title: 'Orders',         count: counts.orders,     to: '/admin/manage-order',      variant: 'warning',   border: 'border-warning' },
+{ title: 'Customers',      count: 4,  to: '/admin/manage-customer',   variant: 'info',      border: 'border-info' },
+{ title: 'Orders',         count: 26,     to: '/admin/manage-order',      variant: 'warning',   border: 'border-warning' },
         ].map(({ title, count, to, variant, border }) => (
           <Col md={6} lg={3} key={title}>
             <Card className={`h-100 shadow-sm ${border}`}>

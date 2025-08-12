@@ -209,6 +209,7 @@ const LoginPage = () => {
 
     try {
       await login(email, password); // ✅ context login updates user
+      console.log("Login successful 3");
     } catch (err) {
       setError('Invalid credentials. Please try again.');
       console.error(err);
@@ -217,8 +218,10 @@ const LoginPage = () => {
 
   // ✅ Navigate only after user state is updated
   useEffect(() => {
+    console.log("User role:", user ? user.role : "No user");
     if (user && user.role) {
       if (user.role === 'ROLE_CUSTOMER') {
+        console.log("Login successful 2");
         navigate('/');
       } else if (user.role === 'ROLE_ADMIN') {
         navigate('/admin/dashboard');

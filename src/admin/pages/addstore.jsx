@@ -22,7 +22,7 @@ function AddStore() {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/api/stores', payload); // Replace with your actual endpoint
+      const response = await axios.post('http://52.66.243.195:8080/api/stores', payload); // Replace with your actual endpoint
       console.log('Store added:', response.data);
       alert('Store added successfully!');
       setStoreName('');

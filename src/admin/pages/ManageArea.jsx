@@ -1,42 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Table, Button, Modal, Form } from "react-bootstrap";
 
 const DEFAULT_AREAS = [
-  { id: 1,  areaName: "Kothrud",           store: "Dark Store 1" },
-  { id: 2,  areaName: "Viman Nagar",       store: "Dark Store 2" },
-  { id: 3,  areaName: "Hinjewadi",         store: "Dark Store 1" },
-  { id: 4,  areaName: "Baner",             store: "Dark Store 1" },
-  { id: 5,  areaName: "Wakad",             store: "Dark Store 2" },
-  { id: 6,  areaName: "Magarpatta City",   store: "Dark Store 1" },
-  { id: 7,  areaName: "Hadapsar",          store: "Dark Store 2" },
-  { id: 8,  areaName: "Shivaji Nagar",     store: "Dark Store 1" },
-  { id: 9,  areaName: "Camp",              store: "Dark Store 2" },
-  { id: 10, areaName: "Aundh",             store: "Dark Store 1" },
-  { id: 11, areaName: "Pimple Saudagar",   store: "Dark Store 2" },
-  { id: 12, areaName: "Wadgaon Sheri",     store: "Dark Store 1" },
-  { id: 13, areaName: "Bibwewadi",         store: "Dark Store 2" },
-  { id: 14, areaName: "Vishrantwadi",      store: "Dark Store 1" },
-  { id: 15, areaName: "Yerawada",          store: "Dark Store 2" }
+  { id: 1, areaName: "Kothrud", store: "Dark Store 1" },
+  { id: 2, areaName: "Viman Nagar", store: "Dark Store 2" },
+  { id: 3, areaName: "Hinjewadi", store: "Dark Store 1" },
+  { id: 4, areaName: "Baner", store: "Dark Store 1" },
+  { id: 5, areaName: "Wakad", store: "Dark Store 2" },
+  { id: 6, areaName: "Magarpatta City", store: "Dark Store 1" },
+  { id: 7, areaName: "Hadapsar", store: "Dark Store 2" },
+  { id: 8, areaName: "Shivaji Nagar", store: "Dark Store 1" },
+  { id: 9, areaName: "Camp", store: "Dark Store 2" },
+  { id: 10, areaName: "Aundh", store: "Dark Store 1" },
+  { id: 11, areaName: "Pimple Saudagar", store: "Dark Store 2" },
+  { id: 12, areaName: "Wadgaon Sheri", store: "Dark Store 1" },
+  { id: 13, areaName: "Bibwewadi", store: "Dark Store 2" },
+  { id: 14, areaName: "Vishrantwadi", store: "Dark Store 1" },
+  { id: 15, areaName: "Yerawada", store: "Dark Store 2" }
 ];
 
 const ManageArea = () => {
-  const [areas, setAreas] = useState([]);
+  const [areas, setAreas] = useState(DEFAULT_AREAS);
   const [newArea, setNewArea] = useState({ areaName: "", store: "" });
   const [editArea, setEditArea] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("areaData");
-    if (stored) setAreas(JSON.parse(stored));
-    else {
-      setAreas(DEFAULT_AREAS);
-      localStorage.setItem("areaData", JSON.stringify(DEFAULT_AREAS));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("areaData", JSON.stringify(areas));
-  }, [areas]);
 
   const handleAdd = () => {
     if (!newArea.areaName.trim() || !newArea.store.trim()) return;
@@ -70,11 +57,6 @@ const ManageArea = () => {
 
   const handleDelete = (id) => {
     setAreas((prev) => prev.filter((a) => a.id !== id));
-  };
-
-  const resetToDefault = () => {
-    setAreas(DEFAULT_AREAS);
-    localStorage.setItem("areaData", JSON.stringify(DEFAULT_AREAS));
   };
 
   return (
@@ -139,13 +121,6 @@ const ManageArea = () => {
           ))}
         </tbody>
       </Table>
-
-      {/* Reset Button */}
-      <div className="mt-3">
-        <Button variant="secondary" onClick={resetToDefault}>
-          Reset to Default
-        </Button>
-      </div>
 
       {/* Edit Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>

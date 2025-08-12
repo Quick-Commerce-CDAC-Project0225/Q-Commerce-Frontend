@@ -45,7 +45,7 @@ function ManageDarkStore() {
 
 useEffect(() => {
   axios
-    .get('http://localhost:8080/api/stores') // Replace with your actual endpoint
+    .get('http://52.66.243.195:8080/api/stores') // Replace with your actual endpoint
     .then(response => {
       // Check if response.data is an array
       const data = Array.isArray(response.data) ? response.data : response.data.stores;
