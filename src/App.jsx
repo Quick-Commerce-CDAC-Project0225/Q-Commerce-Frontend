@@ -1,115 +1,22 @@
-
-// import React from 'react';
-// import {
-//   BrowserRouter as Router,
-//   Routes,
-//   Route,
-//   Navigate,   // ← add this
-//   Outlet       // ← add this if you use nested routes
-// } from 'react-router-dom';import { CartProvider } from './client/context/CartContext'; // Import the provider
-// import Navbar from './client/components/Navbar'
-// import ProductListPage from './client/pages/ProductListPage';
-// import CartPage from './client/pages/CartPage';
-// import LoginPage from './client/pages/Login';
-// import SignupPage from './client/pages/Signup';
-// import OrderHistoryPage from './client/pages/OrderHistory';
-// import SelectLocationPage from './client/pages/SelectLocationPage';
-// import DefineAreaPage from './client/pages/DefineAreaPage';
-
-// // Admin imports
-// import AdminNavbar      from './admin/components/AdminNavbar'
-// import AdminDashboard   from './admin/pages/AdminDashboard'
-// import ManageInventory  from './admin/pages/ManageInventory'
-// import ManageArea       from './admin/pages/ManageArea'
-// import ManageCategory   from './admin/pages/ManageCategory'
-// // import ManageProduct    from './admin/pages/ManageProduct'
-// import ManageCustomer   from './admin/pages/ManageCustomer'
-// import ManageOrder      from './admin/pages/ManageOrder'
-// import ManageDarkStore from './admin/pages/managestore';
-// import PlaceOrder from './client/pages/PlaceOrders';
-
-
-// // Layout that wraps all Admin routes
-// const AdminLayout = () => (
-//   <>
-//     <AdminNavbar />
-//     <main>
-//       <Outlet />
-//     </main>
-//   </>
-// )
-
-
-// const HomePage = () => <ProductListPage />;
-
-// function App() {
-//   return (
-//     <CartProvider>
-//       <Navbar />
-//       <main>
-//         <Routes>
-//           <Route path="/" element={<HomePage />} />
-//           <Route path="/products" element={<ProductListPage />} />
-//           <Route path="/products/:category" element={<ProductListPage />} />
-//           <Route path="/cart" element={<CartPage />} />
-//           <Route path="/login" element={<LoginPage />} />
-//           <Route path="/signup" element={<SignupPage />} />
-//           <Route path="/history" element={<OrderHistoryPage />} />
-//            <Route path="/location" element={<SelectLocationPage />} />
-//            <Route path="/location-map" element={<DefineAreaPage />} />
-//            <Route path="place-order" element={<PlaceOrder />} />
-
-//  {/* Admin routes */}
-//             <Route path="/admin/*" element={<AdminLayout />}>
-//               {/* Redirect /admin → /admin/dashboard */}
-//               <Route index                   element={<Navigate to="dashboard" replace />} />
-//               <Route path="dashboard"        element={<AdminDashboard />} />
-//               <Route path="manage-inventory" element={<ManageInventory />} />
-//               <Route path="manage-area"      element={<ManageArea />} />
-//               <Route path="manage-category"  element={<ManageCategory />} />
-//               {/* <Route path="manage-product"   element={<ManageProduct />} /> */}
-//               <Route path="manage-customer"  element={<ManageCustomer />} />
-//               <Route path="manage-order"     element={<ManageOrder />} />
-//               <Route path="manage-store"     element={<ManageDarkStore />} />
-              
-//             </Route>
-
-//             {/* Fallback for unknown routes */}
-//             <Route path="*" element={<h1>404: Page Not Found</h1>} />
-
-          
-
-//         </Routes>
-//       </main>
-//     </CartProvider>
-//   );
-// }
-
-// export default App;
-
-import React from 'react';
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-  Outlet
+  Outlet,
+  useLocation
 } from 'react-router-dom';
 
-import { CartProvider } from './client/context/CartContext';
+import { useAuth } from './client/context/AuthContext';
 
-import Navbar from './client/components/Navbar';
+// ... imports for Navbar, pages, etc.
 import ProductListPage from './client/pages/ProductListPage';
 import CartPage from './client/pages/CartPage';
 import LoginPage from './client/pages/Login';
-import SignupPage from './client/pages/Signup';
-import OrderHistoryPage from './client/pages/OrderHistory';
 import SelectLocationPage from './client/pages/SelectLocationPage';
 import DefineAreaPage from './client/pages/DefineAreaPage';
 import PlaceOrder from './client/pages/PlaceOrders';
-
-// Admin imports
-import AdminNavbar from './admin/components/AdminNavbar';
+import OrderHistoryPage from './client/pages/OrderHistory';
+import SignupPage from './client/pages/Signup';
 import AdminDashboard from './admin/pages/AdminDashboard';
 import ManageInventory from './admin/pages/ManageInventory';
 import ManageArea from './admin/pages/ManageArea';
@@ -117,10 +24,37 @@ import ManageCategory from './admin/pages/ManageCategory';
 import ManageCustomer from './admin/pages/ManageCustomer';
 import ManageOrder from './admin/pages/ManageOrder';
 import ManageDarkStore from './admin/pages/managestore';
-import ManageProduct from './admin/pages/ManageProduct';
-import AddStore from './admin/pages/addstore'; 
+import AddStore from './admin/pages/addstore';
+import ManageProducts from './admin/pages/manageproducts';
+import AdminNavbar from './admin/components/AdminNavbar';
+import Navbar from './client/components/Navbar';
 
-// ✅ Layout for client routes
+// inline guards
+function RequireAuth({ children }) {
+  const { user } = useAuth();
+  const location = useLocation();
+  if (user === null) return null; // loader if you want
+  if (user === false) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+  return children;
+}
+
+function RequireRole({ allowed = [], children }) {
+  const { user } = useAuth();
+  const location = useLocation();
+  if (user === null) return null;
+  if (user === false) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+  if (!allowed.includes(user.role)) {
+    return <Navigate to="/" replace />;
+  }
+  
+  return children;
+}
+
+// layouts
 const ClientLayout = () => (
   <>
     <Navbar />
@@ -130,7 +64,6 @@ const ClientLayout = () => (
   </>
 );
 
-// ✅ Layout for admin routes
 const AdminLayout = () => (
   <>
     <AdminNavbar />
@@ -142,43 +75,69 @@ const AdminLayout = () => (
 
 const HomePage = () => <ProductListPage />;
 
-function App() {
+export default function App() {
   return (
-    <CartProvider>
-      <Routes>
-        {/* ✅ CLIENT ROUTES */}
-        <Route element={<ClientLayout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductListPage />} />
-          <Route path="/products/:category" element={<ProductListPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/history" element={<OrderHistoryPage />} />
-          <Route path="/location" element={<SelectLocationPage />} />
-          <Route path="/location-map" element={<DefineAreaPage />} />
-          <Route path="/place-order" element={<PlaceOrder />} />
-        </Route>
+    <Routes>
+      {/* client routes */}
+      <Route element={<ClientLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/products" element={<ProductListPage />} />
+        <Route path="/products/:category" element={<ProductListPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route
+      path="/location"
+      element={
+        <RequireAuth>
+          <SelectLocationPage />
+        </RequireAuth>
+      }
+    />
 
-        {/* ✅ ADMIN ROUTES */}
-        <Route path="/admin/*" element={<AdminLayout />}>
-          <Route index element={<Navigate to="dashboard" replace />} />
-          <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="manage-inventory" element={<ManageInventory />} />
-          <Route path="manage-area" element={<ManageArea />} />
-          <Route path="manage-category" element={<ManageCategory />} />
-          <Route path="manage-customer" element={<ManageCustomer />} />
-          <Route path="manage-order" element={<ManageOrder />} />
-          <Route path="manage-store" element={<ManageDarkStore />} />
-          <Route path="add-store" element={<AddStore />} />
-          <Route path="manage-product" element={<ManageProduct />} />
-        </Route>
+        {/* protected */}
+        <Route
+          path="/place-order"
+          element={
+            <RequireAuth>
+              <PlaceOrder />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <RequireAuth>
+              <OrderHistoryPage />
+            </RequireAuth>
+          }
+        />
+      </Route>
 
-        {/* Fallback for unknown routes */}
-        <Route path="*" element={<h1>404: Page Not Found</h1>} />
-      </Routes>
-    </CartProvider>
+      {/* admin routes */}
+      <Route
+        path="/admin/*"
+        element={
+          <RequireRole allowed={['ROLE_ADMIN']}>
+            <AdminLayout />
+          </RequireRole>
+        }
+      >
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="manage-inventory" element={<ManageInventory />} />
+        <Route path="manage-area" element={<ManageArea />} />
+        <Route path="manage-category" element={<ManageCategory />} />
+        <Route path="manage-customer" element={<ManageCustomer />} />
+        <Route path="manage-order" element={<ManageOrder />} />
+        <Route path="manage-store" element={<ManageDarkStore />} />
+        <Route path="add-store" element={<AddStore />} />
+        <Route path="manage-product" element={<ManageProducts />} />
+        <Route path="add-area" element={<DefineAreaPage />} />
+      </Route>
+
+      {/* 404 */}
+      <Route path="*" element={<h1>404: Page Not Found</h1>} />
+    </Routes>
   );
 }
-
-export default App;
