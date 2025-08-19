@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-// --- Styled Components ---
 const PageContainer = styled.div`
   display: flex;
   align-items: center;
