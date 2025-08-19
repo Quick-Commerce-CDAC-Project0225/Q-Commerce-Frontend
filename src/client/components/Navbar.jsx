@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import './Navbar.css'; // optional custom styles
+import './Navbar.css'; 
+import logo from '../../assets/quickmart-logo.png';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -46,8 +47,10 @@ const Navbar = () => {
     <header className="fixed-top">
       <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-2">
         <div className="container-fluid">
-          <Link className="navbar-brand fw-bold text-primary" to="/">
-            Quick Mart
+          <Link className="navbar-brand d-flex align-items-center" to="/" aria-label="Quick Mart home">
+            <img src={logo} alt="Quick Mart" className="brand-logo" />
+            {/* keep a hidden text label for accessibility if you want */}
+            <span className="visually-hidden">Quick Mart</span>
           </Link>
 
           <button

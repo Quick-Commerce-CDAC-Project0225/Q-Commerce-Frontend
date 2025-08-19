@@ -25,3 +25,14 @@
   z-index: 1029;
   background-color: white;
 }
+
+.brand-logo {
+  height:auto;     /* tweak to your liking */
+  width: 150px;
+  display: block;
+}
+
+/* Optional: slightly larger on desktop */
+@media (min-width: 992px) {
+  .brand-logo { height: 80px; }
+}

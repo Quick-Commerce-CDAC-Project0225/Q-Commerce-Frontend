@@ -72,7 +72,7 @@ const OrderCard = ({ order }) => {
         <ProductList>
           {order.products.map((product, index) => (
             <ProductItem key={index}>
-              <ProductName>{product.name}</ProductName>
+              <ProductName>{product.product.name}</ProductName>
               <ProductDetail>Quantity: {product.quantity}</ProductDetail>
               <ProductDetail>Price: ₹{product.price}</ProductDetail>
             </ProductItem>

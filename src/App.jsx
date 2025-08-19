@@ -25,9 +25,9 @@ import ManageCustomer from './admin/pages/ManageCustomer';
 import ManageOrder from './admin/pages/ManageOrder';
 import ManageDarkStore from './admin/pages/managestore';
 import AddStore from './admin/pages/addstore';
-import ManageProducts from './admin/pages/manageproducts';
 import AdminNavbar from './admin/components/AdminNavbar';
 import Navbar from './client/components/Navbar';
+import ManageProduct from './admin/pages/ManageProduct';
 
 // inline guards
 function RequireAuth({ children }) {
@@ -132,7 +132,7 @@ export default function App() {
         <Route path="manage-order" element={<ManageOrder />} />
         <Route path="manage-store" element={<ManageDarkStore />} />
         <Route path="add-store" element={<AddStore />} />
-        <Route path="manage-product" element={<ManageProducts />} />
+        <Route path="manage-product" element={<ManageProduct />} />
         <Route path="add-area" element={<DefineAreaPage />} />
       </Route>
 

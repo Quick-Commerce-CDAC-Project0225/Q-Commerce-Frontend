@@ -2,21 +2,14 @@ import React, { useState } from "react";
 import { Table, Button, Form, Modal } from "react-bootstrap";
 
 const DEFAULT_CATEGORIES = [
-  { id: 1, categoryName: "Groceries" },
-  { id: 2, categoryName: "Beverages" },
-  { id: 3, categoryName: "Snacks" },
-  { id: 4, categoryName: "Dairy" },
-  { id: 5, categoryName: "Bakery" },
-  { id: 6, categoryName: "Household Supplies" },
-  { id: 7, categoryName: "Personal Care" },
-  { id: 8, categoryName: "Electronics" },
-  { id: 9, categoryName: "Clothing" },
-  { id: 10, categoryName: "Health & Wellness" },
-  { id: 11, categoryName: "Stationery" },
-  { id: 12, categoryName: "Toys & Games" },
-  { id: 13, categoryName: "Sports & Outdoors" },
-  { id: 14, categoryName: "Automotive" },
-  { id: 15, categoryName: "Pet Supplies" }
+  { id: 1, categoryName: "Cafe" },
+  { id: 2, categoryName: "Home" },
+  { id: 3, categoryName: "Toys" },
+  { id: 4, categoryName: "Fresh" },
+  { id: 5, categoryName: "Electronics" },
+  { id: 6, categoryName: "Mobiles" },
+  { id: 7, categoryName: "Beauty" },
+  { id: 8, categoryName: "Fashion" }
 ];
 
 export default function ManageCategory() {
