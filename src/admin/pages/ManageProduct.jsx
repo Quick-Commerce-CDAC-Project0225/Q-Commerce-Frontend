@@ -37,7 +37,7 @@ const pretty = (s) => s.charAt(0) + s.slice(1).toLowerCase();
 async function uploadProductImage(productId, file) {
   if (!file) return;
   const formData = new FormData();
-  formData.append("file", file); // Spring usually expects 'file'
+  formData.append("files", file); // Spring usually expects 'file'
   await axios.post(
     `http://52.66.243.195:8080/api/v1/images/upload/${productId}`,
     formData,
