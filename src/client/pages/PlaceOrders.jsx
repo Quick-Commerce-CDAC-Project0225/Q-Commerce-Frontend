@@ -37,7 +37,7 @@ function PlaceOrder() {
     try {
       setLoading(true);
       const response = await axios.post(
-        'http://52.66.243.195:8080/api/v1/orders',
+        'http://65.1.207.157:8080/api/v1/orders',
         orderData,
         {
           headers: {

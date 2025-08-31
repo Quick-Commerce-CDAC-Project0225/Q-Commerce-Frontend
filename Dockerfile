@@ -8,7 +8,7 @@ RUN npm ci --prefer-offline --no-audit --progress=false
 
 # copy source and build; pass API base at build time if needed
 COPY . .
-# e.g., docker build --build-arg VITE_API_BASE=http://52.66.243.195:8080
+# e.g., docker build --build-arg VITE_API_BASE=http://65.1.207.157:8080
 ARG VITE_API_BASE
 ENV VITE_API_BASE=$VITE_API_BASE
 RUN npm run build

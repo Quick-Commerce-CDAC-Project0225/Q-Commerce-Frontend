@@ -1,6 +1,6 @@
 // src/config.js
 
-export const BASE_URL = "http://52.66.243.195:8080/api/v1"; // Adjust this as per your backend
+export const BASE_URL = "http://65.1.207.157:8080/api/v1"; // Adjust this as per your backend
 
 export const API_ENDPOINTS = {
   LOGIN: `${BASE_URL}/auth/login`,

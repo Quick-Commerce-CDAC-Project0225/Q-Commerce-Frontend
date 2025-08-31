@@ -67,7 +67,7 @@ const ProductListPage = () => {
           // ⬇️ use backend category as-is (e.g., "FRESH")
           category: norm(p.category),
           imageUrl: p.images?.[0]
-            ? `http://52.66.243.195:8080${p.images[0]}`
+            ? `http://65.1.207.157:8080${p.images[0]}`
             : 'https://placehold.co/600x400?text=No+Image',
         }));
         setProducts(mapped);

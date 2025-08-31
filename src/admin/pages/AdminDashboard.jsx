@@ -75,11 +75,11 @@ export default function AdminDashboard() {
           products,
           warehouses,
         ] = await Promise.all([
-          fetchCount('http://52.66.243.195:8080/api/v1/users/customers'),
-          fetchCount('http://52.66.243.195:8080/api/v1/inventory'),
-          fetchCount('http://52.66.243.195:8080/api/v1/orders'),
-          fetchCount('http://52.66.243.195:8080/api/v1/products'),
-          fetchCount('http://52.66.243.195:8080/api/v1/warehouses'),
+          fetchCount('http://65.1.207.157:8080/api/v1/users/customers'),
+          fetchCount('http://65.1.207.157:8080/api/v1/inventory'),
+          fetchCount('http://65.1.207.157:8080/api/v1/orders'),
+          fetchCount('http://65.1.207.157:8080/api/v1/products'),
+          fetchCount('http://65.1.207.157:8080/api/v1/warehouses'),
         ]);
 
         if (!alive) return;

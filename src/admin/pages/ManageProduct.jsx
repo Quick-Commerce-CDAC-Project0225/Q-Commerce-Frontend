@@ -39,7 +39,7 @@ async function uploadProductImage(productId, file) {
   const formData = new FormData();
   formData.append("files", file); // Spring usually expects 'file'
   await axios.post(
-    `http://52.66.243.195:8080/api/v1/images/upload/${productId}`,
+    `http://65.1.207.157:8080/api/v1/images/upload/${productId}`,
     formData,
     {
       headers: { "Content-Type": "multipart/form-data" },
@@ -244,7 +244,7 @@ export default function ManageProduct() {
               const pid = p.id ?? p.productId;
               const firstImg =
                 p.images && p.images.length > 0
-                  ? `http://52.66.243.195:8080${p.images[0]}`
+                  ? `http://65.1.207.157:8080${p.images[0]}`
                   : null;
               return (
                 <tr key={pid}>
